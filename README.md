@@ -1,9 +1,26 @@
-# 💱 App de Cotações em Tempo Real
+# 💰 Cotações em Tempo Real
 
-Este é um app feito com **Streamlit** que consulta a cotação de moedas (USD, EUR, BRL) em tempo real usando a **AwesomeAPI**.
+Este projeto é uma aplicação desenvolvida com **Python** e **Streamlit** que permite visualizar em tempo real as cotações de moedas (USD/BRL, EUR/BRL, BRL/USD, BRL/EUR), além de salvar os dados em CSV, gerar gráficos interativos e exportar visualizações.
 
-### 🔧 Funcionalidades:
-- Consulta manual com botão
-- Auto-atualização opcional a cada 10 segundos
-- Exibição de cotações com indicadores visuais
-- Interface limpa e responsiva com Streamlit
+## 🚀 Funcionalidades
+
+- 📡 Consulta de cotações em tempo real via API (AwesomeAPI)
+- 🔁 Atualização automática a cada 10 segundos (opcional)
+- 🔄 Atualização manual com botão
+- 🗂 Salvamento das cotações em arquivo CSV
+- 📈 Visualização de gráfico de variação cambial com filtro de período:
+  - Últimas 24 horas
+  - Últimos 7 dias
+  - Últimos 30 dias
+  - Todo o período
+- 💾 Exportação dos gráficos em formato **PNG** e **PDF**
+- 📊 Histórico completo das cotações salvas
+
+## 🛠 Tecnologias utilizadas
+
+- Python
+- Streamlit
+- Pandas
+- Plotly
+- Requests
+- Streamlit Autorefresh
