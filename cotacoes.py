@@ -101,36 +101,34 @@ def exibir_grafico(caminho_csv='data/cotacoes.csv'):
         return
     
     df = pd.read_csv(caminho_csv)
+
+    # Corrige conversão e limpa dados inválidos
     df['Data/Hora'] = pd.to_datetime(df['Data/Hora'], errors='coerce')
     df = df.dropna(subset=['Data/Hora'])
-    df = df.drop_duplicates(subset='Data/Hora', keep='last')
-
 
     # filtrando o período
     opcoes_periodo = {
         "Últimas 24 horas": 1,
         "Últimos 7 dias": 7,
         "Últimos 30 dias": 30,
-        "Todo o período":None
+        "Todo o período": None
     }
     
-    periodo_escolhido = st.selectbox(" Selecione o período", list(opcoes_periodo.keys()))
+    periodo_escolhido = st.selectbox("Selecione o período", list(opcoes_periodo.keys()))
 
     if opcoes_periodo[periodo_escolhido]:
         dias = opcoes_periodo[periodo_escolhido]
         data_limite = datetime.now() - pd.Timedelta(days=dias)
         df = df[df['Data/Hora'] >= data_limite]
 
-
-
-    # Selecionando colunas de interesse para o gráfico
     df_plot = df[['Data/Hora', 'USD -> BRL', 'EUR -> BRL']]
 
-    fig = px.line(df_plot, x = 'Data/Hora', y=['USD -> BRL', 'EUR -> BRL'],
-                  labels = {'value': 'Cotação', 'variable': 'Moeda'},
-                  title = '📈 Variação das Cotações')
+    fig = px.line(df_plot, x='Data/Hora', y=['USD -> BRL', 'EUR -> BRL'],
+                  labels={'value': 'Cotação', 'variable': 'Moeda'},
+                  title='📈 Variação das Cotações')
         
     st.plotly_chart(fig, use_container_width=True)
+
 
     # Exportar o gráfico
 
