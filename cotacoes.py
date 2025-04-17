@@ -35,7 +35,7 @@ def consultar_cotacoes():
         "EURBRL": float(dados['EURBRL']['bid']),
         "BRLUSD": 1/float(dados['BRLUSD']['bid']),
         "BRLEUR":1/float(dados['BRLEUR']['bid']),
-        "hora": datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        "hora": datetime.now().replace(microsecond=0).strftime('%d/%m/%Y %H:%M:%S')
         }
 
     else:
@@ -101,7 +101,10 @@ def exibir_grafico(caminho_csv='data/cotacoes.csv'):
         return
     
     df = pd.read_csv(caminho_csv)
-    df['Data/Hora'] = pd.to_datetime(df['Data/Hora'])
+    df['Data/Hora'] = pd.to_datetime(df['Data/Hora'], errors='coerce')
+    df = df.dropna(subset=['Data/Hora'])
+    df = df.drop_duplicates(subset='Data/Hora', keep='last')
+
 
     # filtrando o período
     opcoes_periodo = {
@@ -136,12 +139,13 @@ def exibir_grafico(caminho_csv='data/cotacoes.csv'):
         with col1:
             if st.button("  Exportar como PNG"):
                 fig.write_image("data/grafico_cotacoes.png", format = 'png')
-                st.sucess("imagem salva como 'data/grafico_cotacoes.png")
+                st.success("imagem salva como 'data/grafico_cotacoes.png'")
+
 
         with col2:
             if st.button(" Exportar como PDF"):
                 fig.write_image("data/grafico_cotacoes.pdf", format = 'pdf')
-                st.suceess("PDF salvo como 'data/grafico_cotacoes.pdf")        
+                st.success("PDF salvo como 'data/grafico_cotacoes.pdf'")        
 
 
 if __name__ == '__main__':
